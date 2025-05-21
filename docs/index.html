@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English 6 Closing Party Hub</title>
+    <link rel="stylesheet" href="style_fete.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="party-banner">
+                <h1>🎉 Dernier cours en main, fête en vue ! 🎉</h1>
+                <h2>Welcome to the ENGLISH 6 CLOSING PARTY HUB</h2>
+                <p class="subtitle">👉 <em>This page is your interactive guide to the best last class ever.</em> Let the fun begin! 🥳</p>
+            </div>
+        </header>
+
+        <!-- Buffet Zone -->
+        <section class="buffet-zone">
+            <h2>🍴 BUFFET ZONE</h2>
+            <p class="zone-description">Ready to treat your taste buds?</p>
+            
+            <div class="buffet-items">
+                <div class="buffet-item">
+                    <span class="checkmark">✅</span>
+                    <span class="item-name">Grilled Lamb</span>
+                    <span class="item-french">(Mouton bien braisé)</span>
+                    <span class="emoji">🐑</span>
+                </div>
+                <div class="buffet-item">
+                    <span class="checkmark">✅</span>
+                    <span class="item-name">Chilled Yogurt</span>
+                    <span class="item-french">(Lait caillé)</span>
+                    <span class="emoji">🧃</span>
+                </div>
+                <div class="buffet-item">
+                    <span class="checkmark">✅</span>
+                    <span class="item-name">Fruit Salad</span>
+                    <span class="item-french">(Salade de fruits)</span>
+                    <span class="emoji">🍍🍉🍓</span>
+                </div>
+            </div>
+            
+            <p class="buffet-note">🥄 <em>No need to choose — try it all!</em></p>
+        </section>
+
+        <!-- Activity Zone -->
+        <section class="activity-zone">
+            <h2>🎯 ACTIVITY ZONE</h2>
+            <p class="zone-description">Let's turn up the fun with these 3 exciting activities. Each one will unlock at its time. The moderator will activate the link when it starts.</p>
+            
+            <div class="activities-table">
+                <div class="table-header">
+                    <span>#</span>
+                    <span>Activity</span>
+                    <span>Status</span>
+                    <span>Access</span>
+                </div>
+                
+                <div class="activity-row" id="activity-1">
+                    <span class="activity-number">1️⃣</span>
+                    <span class="activity-name">QUIZ SHOWDOWN</span>
+                    <span class="activity-status locked">🔒 Waiting...</span>
+                    <button class="activity-button disabled" id="quiz-btn" disabled>🔗 Join Quiz</button>
+                </div>
+                
+                <div class="activity-row" id="activity-2">
+                    <span class="activity-number">2️⃣</span>
+                    <span class="activity-name">GUESS THAT EXPRESSION</span>
+                    <span class="activity-status locked">🔒 Get ready!</span>
+                    <button class="activity-button disabled" id="guess-btn" disabled>🔗 Play Game</button>
+                </div>
+                
+            </div>
+            
+            <p class="activity-note">🕐 <em>Stay tuned. The moderator will guide you step by step!</em></p>
+        </section>
+
+<!-- Moderator Message -->
+<section class="moderator-message">
+    <h2>💬 MESSAGE FROM THE MODERATOR</h2>
+    <blockquote>
+        "Now that we’ve warmed up a bit, let’s move on to some activities that are... let’s say, more fun!"
+    </blockquote>
+    <ul>
+        <li>🔗 Activity 1: Steps and Stories, <a href="https://awa-d.github.io/English6lastClass_AwasActivty/"> Our English Path</a></li>
+        <li>🔗 Activity 2:  <a href="https://awa-d.github.io/English6_lastClass_celinaactivity/">Undercover</a></li>
+        <li>🔗 Activity 3: Tell us about yourself <a href="https://awa-d.github.io/English6_lastclass/">in 3 minutes!</a></li>
+    </ul>
+</section>
+
+       
+
+        <!-- Moderator Control Panel (Hidden by default) -->
+        <div class="moderator-panel" id="moderator-panel">
+            <h3>🎛️ Moderator Controls</h3>
+            <div class="control-buttons">
+                <button onclick="enableActivity(1)" class="control-btn">Enable Quiz</button>
+                <button onclick="enableActivity(2)" class="control-btn">Enable Guessing Game</button>
+                <button onclick="resetAll()" class="control-btn reset">Reset All</button>
+            </div>
+            <button onclick="toggleModeratorPanel()" class="toggle-panel">Hide Panel</button>
+        </div>
+
+        <!-- Toggle for moderator panel -->
+        <button class="moderator-toggle" onclick="toggleModeratorPanel()">🎛️</button>
+    </div>
+
+    <!-- Activity Modals -->
+    <div class="modal" id="quiz-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('quiz-modal')">&times;</span>
+            <h2>🏆 QUIZ SHOWDOWN</h2>
+            <div class="quiz-container">
+                <div id="quiz-question">
+                    <h3>Question 1:</h3>
+                    <p>What does "break the ice" mean?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false)">A) To literally break ice</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true)">B) To start a conversation</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false)">C) To be very cold</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false)">D) To make ice cream</button>
+                    </div>
+                </div>
+                <div class="quiz-score">Score: <span id="score">0</span>/16</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="guess-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('guess-modal')">&times;</span>
+            <h2>🎭 GUESS THAT EXPRESSION</h2>
+            <div class="guess-container">
+                <div class="expression-display">
+                    <h3>Act out this expression:</h3>
+                    <p id="current-expression">"It's raining cats and dogs"</p>
+                    <button onclick="newExpression()" class="new-expression-btn">Get New Expression</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="script_fete.js"></script>
+</body>
+</html>
