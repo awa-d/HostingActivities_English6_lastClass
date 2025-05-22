@@ -1,0 +1,546 @@
+/* styles.css */
+:root {
+    --primary-color: #FF4081;
+    --secondary-color: #6200EA;
+    --accent-color: #FFAB00;
+    --background-color: #f5f5f5;
+    --text-color: #333;
+    --card-background: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    min-height: 100vh;
+    color: var(--text-color);
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 30px;
+    position: relative;
+}
+
+h1 {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.spin-button {
+    display: block;
+    margin: 0 auto 30px;
+    padding: 20px 40px;
+    font-size: 1.5em;
+    font-weight: bold;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.spin-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.spin-button:active {
+    transform: translateY(-1px);
+}
+
+.spin-button.spinning {
+    animation: spin 2s linear;
+    pointer-events: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+.spotlight {
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    color: white;
+    padding: 40px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.spotlight::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.student-name {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
+}
+
+.timer {
+    font-size: 3em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-family: 'Courier New', monospace;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
+}
+
+.timer.warning {
+    color: var(--accent-color);
+    animation: pulse 1s infinite;
+}
+
+.timer.critical {
+    color: #ff4444;
+    animation: blink 0.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.5; }
+}
+
+.start-timer-button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    z-index: 1;
+}
+
+.start-timer-button:hover:not(:disabled) {
+    background: #e6a000;
+    transform: translateY(-2px);
+}
+
+.start-timer-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.students-list {
+    background: var(--card-background);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.students-list h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-list {
+    padding: 8px 15px;
+    font-size: 0.9em;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.toggle-list:hover {
+    background: #4a00c4;
+}
+
+.students-container {
+    transition: var(--transition);
+}
+
+.students-container.hidden {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.student-list-items {
+    list-style: none;
+    margin-bottom: 20px;
+    min-height: 100px;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: var(--border-radius);
+    padding: 10px;
+}
+
+.student-list-items li {
+    padding: 10px;
+    margin-bottom: 5px;
+    background: var(--background-color);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.student-list-items li:hover {
+    background: #e0e0e0;
+}
+
+.student-list-items li.selected {
+    background: var(--primary-color);
+    color: white;
+    transform: scale(1.02);
+}
+
+.remove-student {
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: var(--transition);
+}
+
+.remove-student:hover {
+    background: #cc0000;
+    transform: scale(1.1);
+}
+
+.student-input {
+    display: flex;
+    gap: 10px;
+}
+
+.student-input input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1em;
+    transition: var(--transition);
+}
+
+.student-input input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 64, 129, 0.1);
+}
+
+.student-input button {
+    padding: 12px 24px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1em;
+    transition: var(--transition);
+}
+
+.student-input button:hover {
+    background: #e6396f;
+    transform: translateY(-2px);
+}
+
+.control-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.timer-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: var(--background-color);
+    padding: 15px;
+    border-radius: var(--border-radius);
+}
+
+.time-adjust-btn {
+    padding: 10px 15px;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1em;
+    transition: var(--transition);
+}
+
+.time-adjust-btn:hover {
+    background: #4a00c4;
+    transform: scale(1.05);
+}
+
+.reset-button {
+    padding: 15px 25px;
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1em;
+    transition: var(--transition);
+}
+
+.reset-button:hover {
+    background: #cc0000;
+    transform: translateY(-2px);
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+footer p {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.current-speaker {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Customize Button */
+.customize-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    z-index: 1000;
+}
+
+.customize-button:hover {
+    transform: scale(1.1) rotate(45deg);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: var(--card-background);
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-modal:hover {
+    color: var(--primary-color);
+}
+
+.modal h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.color-picker, .time-settings {
+    margin-bottom: 25px;
+}
+
+.color-picker h3, .time-settings h3 {
+    margin-bottom: 15px;
+    color: var(--secondary-color);
+}
+
+.color-option, .time-setting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.color-option input[type="color"], .time-setting input[type="number"] {
+    padding: 5px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.primary-button {
+    width: 100%;
+    padding: 15px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.primary-button:hover {
+    background: #e6396f;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    .spin-button {
+        padding: 15px 30px;
+        font-size: 1.2em;
+    }
+    
+    .student-name {
+        font-size: 2em;
+    }
+    
+    .timer {
+        font-size: 2.5em;
+    }
+    
+    .control-panel {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .timer-controls {
+        justify-content: center;
+    }
+    
+    .customize-button {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    .spotlight {
+        padding: 20px;
+    }
+    
+    .student-name {
+        font-size: 1.5em;
+    }
+    
+    .timer {
+        font-size: 2em;
+    }
+    
+    .student-input {
+        flex-direction: column;
+    }
+}

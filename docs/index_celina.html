@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Undercover Game Guide</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #4a5568;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: #666;
+      font-weight: 300;
+    }
+
+    .game-stats {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      min-width: 120px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+
+    .section-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .section-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: #4a5568;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .emoji {
+      font-size: 1.8rem;
+    }
+
+    .role-grid {
+      display: grid;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .role-card {
+      background: linear-gradient(135deg, #f7fafc, #edf2f7);
+      padding: 15px;
+      border-radius: 12px;
+      border-left: 4px solid #667eea;
+      transition: transform 0.2s ease;
+    }
+
+    .role-card:hover {
+      transform: translateX(5px);
+    }
+
+    .role-name {
+      font-weight: bold;
+      color: #667eea;
+      margin-bottom: 5px;
+    }
+
+    .example-section {
+      background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+      color: #2d3436;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .example-section::before {
+      content: '💡';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 3rem;
+      opacity: 0.2;
+    }
+
+    .game-flow {
+      counter-reset: step-counter;
+    }
+
+    .flow-step {
+      counter-increment: step-counter;
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      margin: 15px 0;
+      padding: 20px;
+      border-radius: 12px;
+      position: relative;
+      padding-left: 60px;
+    }
+
+    .flow-step::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #667eea;
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .interactive-section {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 30px;
+      margin: 30px 0;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .timer-display {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #667eea;
+      margin: 20px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #74b9ff, #0984e3);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #fd79a8, #e84393);
+    }
+
+    footer {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 20px;
+      margin-top: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .tips-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .tip-item {
+      background: rgba(102, 126, 234, 0.1);
+      padding: 12px;
+      border-radius: 8px;
+      border-left: 3px solid #667eea;
+    }
+
+    .winning-conditions {
+      display: grid;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .win-condition {
+      padding: 15px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .civilian-win {
+      background: linear-gradient(135deg, #a8e6cf, #88d8a3);
+    }
+
+    .undercover-win {
+      background: linear-gradient(135deg, #ffd93d, #ffb74d);
+    }
+
+    .white-win {
+      background: linear-gradient(135deg, #ff8a80, #f48fb1);
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+
+      .game-stats {
+        gap: 15px;
+      }
+
+      .button-group {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 200px;
+      }
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 10% auto;
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎭 Undercover: Game Guide</h1>
+      <p class="subtitle">A thrilling party game of bluff, deduction, and quick thinking!</p>
+      
+      <div class="game-stats">
+        <div class="stat-card">
+          <div class="stat-number">3+</div>
+          <div class="stat-label">Min Players</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">6-12</div>
+          <div class="stat-label">Best Range</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">15-30</div>
+          <div class="stat-label">Minutes</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="interactive-section">
+      <h3>🕐 Game Timer</h3>
+      <div class="timer-display" id="timerDisplay">05:00</div>
+      <div class="button-group">
+        <button class="btn" id="startTimer">Start Round</button>
+        <button class="btn btn-secondary" id="pauseTimer">Pause</button>
+        <button class="btn btn-danger" id="resetTimer">Reset</button>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="section-card">
+        <h2 class="section-title">
+          <span class="emoji">🎯</span>
+          Goal of the Game
+        </h2>
+        <div class="winning-conditions">
+          <div class="win-condition civilian-win">
+            <div class="role-name">👥 Civilians</div>
+            <p>Find and eliminate all Undercover players and Mr. White</p>
+          </div>
+          <div class="win-condition undercover-win">
+            <div class="role-name">🕵️ Undercover</div>
+            <p>Blend in with civilians and avoid detection until you outnumber them</p>
+          </div>
+          <div class="win-condition white-win">
+            <div class="role-name">❓ Mr. White</div>
+            <p>Guess the civilians' secret word after being eliminated</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2 class="section-title">
+          <span class="emoji">🃏</span>
+          Player Roles
+        </h2>
+        <p>Each player receives a secret word based on their role:</p>
+        <div class="role-grid">
+          <div class="role-card">
+            <div class="role-name">👥 Civilians (Majority)</div>
+            <p>All receive the same word (e.g., "Dog")</p>
+          </div>
+          <div class="role-card">
+            <div class="role-name">🕵️ Undercover (1-2 players)</div>
+            <p>Receive a similar but different word (e.g., "Wolf")</p>
+          </div>
+          <div class="role-card">
+            <div class="role-name">❓ Mr. White (1 player)</div>
+            <p>Receives no word at all - must improvise!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2 class="section-title">
+          <span class="emoji">📱</span>
+          Game Flow
+        </h2>
+        <div class="game-flow">
+          <div class="flow-step">
+            <strong>Word Assignment:</strong> Secret words are distributed by app or moderator
+          </div>
+          <div class="flow-step">
+            <strong>Description Round:</strong> Each player says one word/phrase to describe their secret word
+          </div>
+          <div class="flow-step">
+            <strong>Discussion:</strong> Players discuss and analyze the clues given
+          </div>
+          <div class="flow-step">
+            <strong>Voting:</strong> Players vote to eliminate the most suspicious person
+          </div>
+          <div class="flow-step">
+            <strong>Elimination:</strong> Voted player reveals their role and word
+          </div>
+          <div class="flow-step">
+            <strong>Continue:</strong> Repeat until one side achieves victory
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2 class="section-title">
+          <span class="emoji">🧠</span>
+          Strategy Tips
+        </h2>
+        <div class="tips-list">
+          <div class="tip-item">
+            <strong>For Civilians:</strong> Give specific but not too obvious clues to help other civilians identify you
+          </div>
+          <div class="tip-item">
+            <strong>For Undercover:</strong> Listen carefully and give vague clues that could apply to both words
+          </div>
+          <div class="tip-item">
+            <strong>For Mr. White:</strong> Pay attention to patterns and give generic descriptions that fit multiple scenarios
+          </div>
+          <div class="tip-item">
+            <strong>General:</strong> Watch for players who seem confused or give clues that don't quite fit
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h2 class="section-title">
+        <span class="emoji">💡</span>
+        Example Round
+      </h2>
+      <div class="example-section">
+        <p><strong>Scenario:</strong> Civilians have "Chicken", Undercover has "Duck"</p>
+        <br>
+        <p><strong>Alice (Civilian):</strong> "I think of eggs when I see this"</p>
+        <p><strong>Bob (Civilian):</strong> "It has beautiful feathers"</p>
+        <p><strong>Charlie (Undercover):</strong> "You often see them near water"</p>
+        <p><strong>Dana (Mr. White):</strong> "They can fly in the sky"</p>
+        <br>
+        <p><strong>Analysis:</strong> Charlie's clue "near water" fits ducks better than chickens - suspicious! 🕵️</p>
+      </div>
+      <button class="btn" onclick="generateExample()">Generate New Example</button>
+    </div>
+
+    <div class="section-card">
+      <h2 class="section-title">
+        <span class="emoji">🎲</span>
+        Game Variants
+      </h2>
+      <div class="tips-list">
+        <div class="tip-item">
+          <strong>Speed Mode:</strong> Add time limits for descriptions and voting (30-60 seconds)
+        </div>
+        <div class="tip-item">
+          <strong>Phrase Mode:</strong> Allow full sentences instead of single words for descriptions
+        </div>
+        <div class="tip-item">
+          <strong>No Obvious:</strong> Ban overly direct clues to increase difficulty
+        </div>
+        <div class="tip-item">
+          <strong>Team Play:</strong> Play with multiple undercover agents working together
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with ❤️ by Célina for party game enthusiasts!</p>
+    <p>Ready to start your next game night? 🎉</p>
+  </footer>
+
+  <!-- Modal for examples -->
+  <div id="exampleModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>New Example Scenario</h3>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    // Timer functionality
+    let timer;
+    let timeLeft = 300; // 5 minutes in seconds
+    let isRunning = false;
+
+    const timerDisplay = document.getElementById('timerDisplay');
+    const startBtn = document.getElementById('startTimer');
+    const pauseBtn = document.getElementById('pauseTimer');
+    const resetBtn = document.getElementById('resetTimer');
+
+    function updateDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      
+      // Change color when time is running low
+      if (timeLeft <= 30) {
+        timerDisplay.style.color = '#e74c3c';
+      } else if (timeLeft <= 60) {
+        timerDisplay.style.color = '#f39c12';
+      } else {
+        timerDisplay.style.color = '#667eea';
+      }
+    }
+
+    function startTimer() {
+      if (!isRunning) {
+        isRunning = true;
+        startBtn.textContent = 'Running...';
+        startBtn.disabled = true;
+        
+        timer = setInterval(() => {
+          if (timeLeft > 0) {
+            timeLeft--;
+            updateDisplay();
+          } else {
+            clearInterval(timer);
+            isRunning = false;
+            startBtn.textContent = 'Time\'s Up!';
+            startBtn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+            // Play a sound effect or show an alert
+            alert('⏰ Time\'s up! Proceed to voting phase.');
+          }
+        }, 1000);
+      }
+    }
+
+    function pauseTimer() {
+      if (isRunning) {
+        clearInterval(timer);
+        isRunning = false;
+        startBtn.textContent = 'Resume';
+        startBtn.disabled = false;
+        startBtn.style.background = 'linear-gradient(135deg, #27ae60, #229954)';
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      isRunning = false;
+      timeLeft = 300;
+      updateDisplay();
+      startBtn.textContent = 'Start Round';
+      startBtn.disabled = false;
+      startBtn.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+    }
+
+    startBtn.addEventListener('click', startTimer);
+    pauseBtn.addEventListener('click', pauseTimer);
+    resetBtn.addEventListener('click', resetTimer);
+
+    // Example scenarios
+    const examples = [
+      {
+        civilian: "Cat",
+        undercover: "Tiger",
+        clues: [
+          { player: "Alice (Civilian)", clue: "It purrs when happy" },
+          { player: "Bob (Civilian)", clue: "Common household pet" },
+          { player: "Charlie (Undercover)", clue: "Has sharp claws and stripes" },
+          { player: "Dana (Mr. White)", clue: "You see them in movies" }
+        ],
+        analysis: "Charlie mentioned 'stripes' which fits tigers better than cats!"
+      },
+      {
+        civilian: "Apple",
+        undercover: "Orange",
+        clues: [
+          { player: "Emma (Civilian)", clue: "Keeps the doctor away" },
+          { player: "Frank (Civilian)", clue: "Often red or green" },
+          { player: "Grace (Undercover)", clue: "Great source of vitamin C" },
+          { player: "Henry (Mr. White)", clue: "Grows on trees" }
+        ],
+        analysis: "Grace's vitamin C clue is more associated with oranges!"
+      },
+      {
+        civilian: "Piano",
+        undercover: "Guitar",
+        clues: [
+          { player: "Ian (Civilian)", clue: "Has black and white keys" },
+          { player: "Julia (Civilian)", clue: "You sit down to play it" },
+          { player: "Kevin (Undercover)", clue: "Has strings that vibrate" },
+          { player: "Luna (Mr. White)", clue: "Makes beautiful music" }
+        ],
+        analysis: "Kevin mentioned strings, which pianos have but aren't the main feature!"
+      }
+    ];
+
+    function generateExample() {
+      const randomExample = examples[Math.floor(Math.random() * examples.length)];
+      const modal = document.getElementById('exampleModal');
+      const modalContent = document.getElementById('modalContent');
+      
+      let content = `
+        <p><strong>Scenario:</strong> Civilians have "${randomExample.civilian}", Undercover has "${randomExample.undercover}"</p>
+        <br>
+      `;
+      
+      randomExample.clues.forEach(clue => {
+        content += `<p><strong>${clue.player}:</strong> "${clue.clue}"</p>`;
+      });
+      
+      content += `<br><p><strong>Analysis:</strong> ${randomExample.analysis} 🕵️</p>`;
+      
+      modalContent.innerHTML = content;
+      modal.style.display = 'block';
+    }
+
+    // Modal functionality
+    const modal = document.getElementById('exampleModal');
+    const closeBtn = document.getElementsByClassName('close')[0];
+
+    closeBtn.onclick = function() {
+      modal.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    }
+
+    // Add smooth scrolling for better UX
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add scroll-to-top functionality
+      let scrollTimeout;
+      
+      window.addEventListener('scroll', function() {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(function() {
+          if (window.scrollY > 300) {
+            if (!document.getElementById('scrollTopBtn')) {
+              const scrollBtn = document.createElement('button');
+              scrollBtn.id = 'scrollTopBtn';
+              scrollBtn.innerHTML = '↑';
+              scrollBtn.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                z-index: 1000;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+                transition: all 0.3s ease;
+              `;
+              
+              scrollBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              });
+              
+              scrollBtn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+              });
+              
+              scrollBtn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+              });
+              
+              document.body.appendChild(scrollBtn);
+            }
+          } else {
+            const scrollBtn = document.getElementById('scrollTopBtn');
+            if (scrollBtn) {
+              scrollBtn.remove();
+            }
+          }
+        }, 100);
+      });
+    });
+
+    // Initialize timer display
+    updateDisplay();
+  </script>
+</body>
+</html>

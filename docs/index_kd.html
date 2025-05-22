@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tell us about yourself! - Ice Breaker Activity</title>
+    <link rel="stylesheet" href="style_kd.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Tell us about yourself!</h1>
+        
+        <button id="spinButton" class="spin-button">Who's next?</button>
+        
+        <div id="spotlight" class="spotlight">
+            <div id="studentName" class="student-name">Whose turn is it?</div>
+            <div id="timer" class="timer">3:00</div>
+            <button id="startTimerButton" class="start-timer-button" disabled>Start the 3 minutes</button>
+        </div>
+        
+        <div class="students-list">
+            <h3>
+                Participants List
+                <button id="toggleList" class="toggle-list">Show/Hide</button>
+            </h3>
+            <div id="studentsContainer" class="students-container">
+                <ul id="studentsList" class="student-list-items"></ul>
+                <div class="student-input">
+                    <input type="text" id="newStudent" placeholder="Add a participant...">
+                    <button id="addStudent">Add</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-panel">
+            <div class="timer-controls">
+                <button id="decreaseTime" class="time-adjust-btn">-30s</button>
+                <span>Time</span>
+                <button id="increaseTime" class="time-adjust-btn">+30s</button>
+            </div>
+            <button id="resetApp" class="reset-button">Reset everything</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Have fun getting to know each other! 🎉</p>
+        <p class="current-speaker">Selected person: <span id="currentSpeaker">None</span></p>
+    </footer>
+    
+    <audio id="buzzerSound" preload="auto">
+        <source src="" type="audio/mp3">
+    </audio>
+    
+    <!-- Modals -->
+    <div id="customizeModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Customize</h2>
+            <div class="modal-body">
+                <div class="color-picker">
+                    <h3>Theme Colors</h3>
+                    <div class="color-option">
+                        <label for="primaryColor">Primary color:</label>
+                        <input type="color" id="primaryColor" value="#FF4081">
+                    </div>
+                    <div class="color-option">
+                        <label for="secondaryColor">Secondary color:</label>
+                        <input type="color" id="secondaryColor" value="#6200EA">
+                    </div>
+                    <div class="color-option">
+                        <label for="accentColor">Accent color:</label>
+                        <input type="color" id="accentColor" value="#FFAB00">
+                    </div>
+                </div>
+                <div class="time-settings">
+                    <h3>Timer Settings</h3>
+                    <div class="time-setting">
+                        <label for="defaultTime">Default time (seconds):</label>
+                        <input type="number" id="defaultTime" min="30" max="600" value="180">
+                    </div>
+                </div>
+                <button id="saveCustomization" class="primary-button">Save</button>
+            </div>
+        </div>
+    </div>
+    
+    <button id="customizeButton" class="customize-button">⚙️</button>
+    
+    <script src="script_kd.js"></script>
+</body>
+</html>
